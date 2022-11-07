@@ -37,8 +37,9 @@ extern TIM_HandleTypeDef htim2;
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
-
 void MX_TIM2_Init(void);
+void PWM_Func1(void);
+void PWM_Func2(void);
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 

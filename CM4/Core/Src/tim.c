@@ -137,6 +137,6 @@ void PWM_Func1(void){
 }
 void PWM_Func2(void){
   __HAL_TIM_SET_PRESCALER(&htim2,400-1);
-  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_1,0); 
+  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_1,900-1); 
 }
-/* USER CODE END 1 */
+/* USER CODE END 1 */ 

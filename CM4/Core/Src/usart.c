@@ -152,5 +152,4 @@ int fputc(int ch,FILE *f)
   return ch;
 }
 #endif
-
 /* USER CODE END 1 */

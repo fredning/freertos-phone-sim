@@ -18,18 +18,16 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "my_ap3216c.h"
-#include "my_led.h"
-#include "my_key.h"
-#include "my_pwm.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "my_ap3216c.h"
+#include "my_led.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,6 +52,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -97,32 +96,29 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM2_Init();
   MX_UART4_Init();
-  AP3216_Init();
   /* USER CODE BEGIN 2 */
-
+  AP3216_Init();
+  pwm2on();
   /* USER CODE END 2 */
 
+  /* Init scheduler */
+  osKernelInitialize();  /* Call init function for freertos objects (in freertos.c) */
+  MX_FREERTOS_Init();
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-  ledoff();
-  //mycodefuc();
-  //pwm1on();
-  //HAL_Delay(5000); //打开屏幕
-  printf("checking status...\r\n");
-  mypwmfunc();
-  //my_i2cfunc();
-
-
 
     /* USER CODE BEGIN 3 */
   }
-
   /* USER CODE END 3 */
 }
- 
+
 /**
   * @brief System Clock Configuration
   * @retval None

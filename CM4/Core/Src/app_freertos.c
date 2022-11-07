@@ -34,6 +34,7 @@
 #include "queue.h"
 #include "my_key.h"
 #include "timers.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +50,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 
-/* USER CODE END PM */
+/* USER CODE END PM */ 
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
@@ -106,7 +107,9 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
+
 printf("freertos intialized\r\n");
+
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -167,7 +170,7 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
     vTaskSuspend(defaultTaskHandle);
-		osTimerStart(myTimer01Handle,30000);
+		osTimerStart(myTimer01Handle,20000);
     printf("task1 running\r\n");
 		mycodefuc();
     osDelay(1);
@@ -189,10 +192,11 @@ void StartTask02(void *argument)
   for(;;)
   {
 		//printf("task2 running\r\n");
-   
+    
+    vTaskSuspend(myTask02Handle);
 		mypwmfunc();
     osDelay(1);
-  }
+  } 
   /* USER CODE END StartTask02 */
 }
 
@@ -211,16 +215,17 @@ void StartTask03(void *argument)
   {
 		//printf("task3 running\r\n");
      if(key_1==down&&key_2==down){
-      vTaskResume(defaultTaskHandle);
-      vTaskResume(myTask02Handle);
-      ledon();
-    }
-    if(key_1==down||key_2==down){
-      xTimerReset(myTimer01Handle,1);
+      vTaskDelay(5);
+      if(key_1==down&&key_2==down){
+        vTaskResume(defaultTaskHandle);
+        vTaskResume(myTask02Handle);
+        ledon();
+        vTaskDelay(1000);
+      }
     }
 		my_i2cfunc();
     osDelay(1);
-  }
+  } 
   /* USER CODE END StartTask03 */
 }
  

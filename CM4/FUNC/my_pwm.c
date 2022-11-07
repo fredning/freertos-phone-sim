@@ -1,25 +1,30 @@
 #include "my_pwm.h"
 #include "my_ap3216c.h"
 #include "my_led.h"
+#include "my_key.h"
 #include "tim.h"
 #include "string.h"
 #include "stdio.h" 
+#include "my_led.h"
+#include "stdbool.h"
 #include "FreeRTOS.h"
 #include "queue.h"
+#include "timers.h"
 #include "cmsis_os2.h"
 
 
 char* temp11;
 extern osMessageQueueId_t myQueue01Handle;
-
+extern osTimerId_t myTimer01Handle;
 void mypwmfunc(){
     uint16_t als,ps;
+    while(1){
     AP3216_Read_ALS_Data(&als);
     AP3216_Read_PS_Data(&ps);
     if(myQueue01Handle!=0){
         if(xQueueSend(myQueue01Handle,&ps,1)!=pdTRUE){
             //printf("queue send failed!!!\r\n");
-            xQueueReset(myQueue01Handle);
+            xQueueReset(myQueue01Handle); 
            // Error_Handler();
         }
     } 
@@ -29,8 +34,11 @@ void mypwmfunc(){
     pwm1on();
     __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_1,ret);
     //printf("als=%x\r\n",als);
-} 
-
+    if(key_1==down||key_2==down){   
+        xTimerReset(myTimer01Handle,100);
+    }
+    } 
+}
 long hexToDec(char *source)
 {
     long sum = 0;

@@ -11,6 +11,7 @@ void ledon(){
 }
 void ledoff(){
     HAL_GPIO_WritePin(GPIOA,GPIO_PIN_10,GPIO_PIN_SET);
+    
 }
 void pwm1on(){
     PWM_Func1();
@@ -24,3 +25,4 @@ void pwm2on(){
     HAL_TIM_Base_Start_IT(&htim2);
     HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
 }
+ 

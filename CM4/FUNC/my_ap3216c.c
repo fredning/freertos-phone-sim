@@ -10,6 +10,7 @@
 
 extern osMessageQueueId_t myQueue01Handle;
 extern osThreadId_t defaultTaskHandle;
+extern osThreadId_t myTask02Handle;
 uint8_t AP3216_Init(void)
 {
 	uint8_t ret_value = 0;
@@ -105,30 +106,35 @@ void AP3216_Read_ALS_Data(uint16_t *pALS)
 
 void my_i2cfunc(){
     //printf("5678");
-    uint16_t ps=0,ir=0,als=0;
+    uint16_t ps=0;
 	if(myQueue01Handle!=0){
 	 if(xQueueReceive(myQueue01Handle,&ps,1)==pdTRUE){
 		//printf("queue messeages recieved.\r\n");
-	} 
+		if(ps>0x1000){
+			vTaskDelay(50);
+			if(ps>0x1000){
+        		ledoff();     //合盖熄屏
+				vTaskSuspend(myTask02Handle);
+        		pwm2on();     //PWM调光也关闭
+        		printf("************屏幕上边界*********\r\n");
+        		printf("  \n");
+        		printf("  \n");
+        		printf("  \n");
+        		printf("  \n");
+        		printf("  \r\n");
+        		printf("************屏幕下边界*********\r\n");
+        		printf("已锁屏  \r\n");
+				vTaskSuspend(defaultTaskHandle);
+				xQueueReset(myQueue01Handle);
+			}
+    	}
+	 } 
 	}
    // AP3216_Read_PS_Data(&ps);
     //AP3216_Read_IR_Data(&ir);
    //AP3216_Read_ALS_Data(&als); 
    //printf("ps=%x\r\n",ps);
-   vTaskDelay(500);
-    if(ps>0x1000){
-        ledoff();     //合盖熄屏
-        pwm2on();     //PWM调光也关闭
-        vTaskDelay(5000);
-        printf("************屏幕上边界*********\r\n");
-        printf("  \n");
-        printf("  \n");
-        printf("  \n");
-        printf("  \n");
-        printf("  \r\n");
-        printf("************屏幕下边界*********\r\n");
-        printf("已锁屏  \r\n");
-		vTaskSuspend(defaultTaskHandle);
-    }
+   
+    
 }
  

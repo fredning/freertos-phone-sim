@@ -131,12 +131,12 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void PWM_Func1(void){
+void pwmmode1(void){
   __HAL_TIM_SET_PRESCALER(&htim2,200-1);
   __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_1,100-1);
 }
-void PWM_Func2(void){
-  __HAL_TIM_SET_PRESCALER(&htim2,400-1);
+void pwmmode2(void){
+  __HAL_TIM_SET_PRESCALER(&htim2,200-1);
   __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_1,0); 
 }
 /* USER CODE END 1 */

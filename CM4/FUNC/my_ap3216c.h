@@ -32,8 +32,5 @@ uint8_t AP3216_WriteOneByte(uint8_t reg, uint8_t data);
 void AP3216_Read_IR_Data(uint16_t *pIR);
 void AP3216_Read_PS_Data(uint16_t *pPS);
 void AP3216_Read_ALS_Data(uint16_t *pALS);
-void my_i2cfunc(void);
-
-
 
 #endif

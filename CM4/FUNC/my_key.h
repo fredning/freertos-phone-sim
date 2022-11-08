@@ -9,6 +9,6 @@
 #define down GPIO_PIN_RESET
 #define up GPIO_PIN_SET
 
-void mycodefuc(void);
+void mycodefunc(void);
 void myprint(void);
 #endif

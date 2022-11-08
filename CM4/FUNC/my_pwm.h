@@ -3,9 +3,10 @@
 
 #include "main.h"
 
-#define mypresclar (999/65536)
 void mypwmfunc(void);
-long hexToDec(char *source);
-int getIndexOfSigns(char ch);
+void mypsfunc(void);
+uint32_t hexToDec(char *source);
+int32_t getIndexOfSigns(uint8_t ch);
+
 #endif 
 

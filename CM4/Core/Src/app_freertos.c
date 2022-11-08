@@ -26,7 +26,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "my_key.h"
-#include "my_ap3216c.h"
 #include "my_pwm.h"
 #include "my_led.h"
 #include "usart.h"
@@ -108,7 +107,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
-printf("freertos intialized\r\n");
+printf("欢迎使用.\r\n");
 
   /* USER CODE END Init */
 
@@ -171,8 +170,7 @@ void StartDefaultTask(void *argument)
   {
     vTaskSuspend(defaultTaskHandle);
 		osTimerStart(myTimer01Handle,20000);
-    printf("task1 running\r\n");
-		mycodefuc();
+		mycodefunc();
     osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
@@ -191,8 +189,6 @@ void StartTask02(void *argument)
   /* Infinite loop */ 
   for(;;)
   {
-		//printf("task2 running\r\n");
-    
     vTaskSuspend(myTask02Handle);
 		mypwmfunc();
     osDelay(1);
@@ -213,17 +209,16 @@ void StartTask03(void *argument)
   /* Infinite loop */
   for(;;)
   {
-		//printf("task3 running\r\n");
-     if(key_1==down&&key_2==down){
+		if(key_1==down&&key_2==down){
       vTaskDelay(5);
       if(key_1==down&&key_2==down){
         vTaskResume(defaultTaskHandle);
         vTaskResume(myTask02Handle);
-        ledon();
+        //ledon();
         vTaskDelay(1000);
       }
     }
-		my_i2cfunc();
+		mypsfunc();
     osDelay(1);
   } 
   /* USER CODE END StartTask03 */
@@ -235,8 +230,7 @@ void Callback01(void *argument)
   /* USER CODE BEGIN Callback01 */
         ledoff();     //
         vTaskSuspend(myTask02Handle);
-        pwm2on();     //PWM调光也关闭
-        //vTaskDelay(5000);
+        pwmoff();     //PWM调光也关闭
         printf("************屏幕上边界************\r\n");
         printf("  \n");
         printf("  \n");

@@ -98,7 +98,7 @@ int main(void)
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
   AP3216_Init();
-  pwm2on();
+  pwmoff();
   /* USER CODE END 2 */
 
   /* Init scheduler */
